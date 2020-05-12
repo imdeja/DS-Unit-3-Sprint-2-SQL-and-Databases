@@ -9,7 +9,7 @@ import numpy as np
 psycopg2.extensions.register_adapter(np.int64, psycopg2._psycopg.AsIs)
 load_dotenv()
 csv = os.path.join(os.path.dirname(__file__), "..", "module2-sql-for-analysis", "titanic.csv")
-df = pd.read_scv(csv)
+df = pd.read_csv(csv)
 df.index += 1
 x = list(df.to_records(index=True))
 
@@ -38,7 +38,7 @@ CREATE TABLE IF NOT EXISTS passengers (
 #curs.execute(query)
 
 tuples= x
-insert_query = "INSERT INTO passengers (id, survived, pclass, name, sex, age, sib_spouse_count, parent_child_count, fare")
+insert_query = "INSERT INTO passengers (id, survived, pclass, name, sex, age, sib_spouse_count, parent_child_count, fare)"
 execute_values(curs, insert_query, tuples)
 conn.commit()
 curs.close()
