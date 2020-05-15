@@ -22,23 +22,22 @@ conn = psycopg2.connect(dbname=DB_NAME, user=DB_USER, password=DB_PASSWORD, host
 curs = conn.cursor()
 
 query = '''
-DROP TABLE passengers;
 CREATE TABLE IF NOT EXISTS passengers (
     id SERIAL PRIMARY KEY,
-    survived int,
-    pclass int,
-    name varchar,
-    sex varchar,
-    age int,
-    sib_spouse_count int,
-    parent_child_count int,
-    fare float8
+    survived integer,
+    pclass integer,
+    name varchar NOT NULL,
+    sex varchar NOT NULL,
+    age float,
+    sib_spouse_count integer,
+    parent_child_count integer,
+    fare float
 );
 '''
-#curs.execute(query)
+curs.execute(query)
 
 tuples= x
-insert_query = "INSERT INTO passengers (id, survived, pclass, name, sex, age, sib_spouse_count, parent_child_count, fare)"
+insert_query = "INSERT INTO passengers (id, survived, pclass, name, sex, age, sib_spouse_count, parent_child_count, fare) VALUES %s"
 execute_values(curs, insert_query, tuples)
 conn.commit()
 curs.close()
